@@ -5,13 +5,45 @@ import java.util.Vector;
 public class MoneyBag implements IMoney {
 	private Vector<Money> fMonies = new Vector<Money>();
 	
-	MoneyBag(Money m1, Money m2) { 
-		appendMoney(m1); 
-		appendMoney(m2);
+
+	public MoneyBag(Money m) {
+		appendMoney(m);
 	}
 	
-	MoneyBag(Money bag[]) {
-		for (int i = 0; i < bag.length; i++) appendMoney(bag[i]);
+	public MoneyBag(Vector<Money> f) {
+		this.fMonies = new Vector<>(f);
+	}
+
+	public MoneyBag(Money m1, Money m2) {
+		appendMoney(m2);
+		appendMoney(m1);
+
+	}
+	
+	public MoneyBag(IMoney m1, IMoney m2) {
+		appendMoney(m2);
+		appendMoney(m1);
+
+	}
+	
+	public MoneyBag(MoneyBag moneyBag) {
+		for (Money money : moneyBag.fMonies) {
+			appendMoney(money);
+		}
+	}
+
+	public MoneyBag(Money bag[]) {
+		for (Money obj : bag) {
+			appendMoney(obj);
+		}
+	}
+
+	public Vector<Money> getMoneyBagVal() {
+		return fMonies;
+	}
+	
+	public IMoney add(IMoney m) {
+		return m.addMoneyBag(this);
 	}
 	
 	private void appendMoney(Money m) {
@@ -28,6 +60,18 @@ public class MoneyBag implements IMoney {
 			}
 		}
 	}
+
+	private void appendMoney(IMoney m) {
+		if (m instanceof Money) {
+			appendMoney(m);
+		}
+		else {
+			MoneyBag moneyBag = (MoneyBag) m;
+			for (Money money : moneyBag.fMonies) {
+				appendMoney(money);
+			}
+		}
+	}
 	
 	 @Override
 	    public boolean equals(Object obj) {
@@ -40,5 +84,20 @@ public class MoneyBag implements IMoney {
 	        MoneyBag other = (MoneyBag) obj;
 	        return fMonies.equals(other.fMonies);
 	    }
+	 
+	 
+	@Override
+	public IMoney addMoney(Money money) {
+		// TODO Auto-generated method stub
+		MoneyBag moneyBag = new MoneyBag(this);
+		return moneyBag.add(money);
+
+	}
+
+	@Override
+	public IMoney addMoneyBag(MoneyBag moneyBag) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -1,5 +1,7 @@
 package fr.emse.test;
 
+import java.util.Vector;
+
 class Money implements IMoney {
 	private int fAmount;
 	private String fCurrency;
@@ -17,11 +19,38 @@ class Money implements IMoney {
 		return fCurrency;
 	}
 	
-	public Money add(Money m) {
-		if (m.currency().equals(currency()))
-			return new Money(amount() + m.amount(), currency());
-			return new MoneyBag(this, m);
+	
+
+	@Override
+	public IMoney add(IMoney aMoney) {
+		// TODO Auto-generated method stub
+		if (aMoney instanceof Money)
+			return aMoney.addMoney(this);
+		return aMoney.addMoneyBag((MoneyBag) aMoney);
+	}
+
+	@Override
+	public IMoney addMoney(Money money) {
+		// TODO Auto-generated method stub
+		if (money.currency().equals(currency())) {
+			return new Money(amount() + money.amount(), currency());
+		} else {
+			return new MoneyBag(this, money);
 		}
+		
+	}
+
+	@Override
+	public IMoney addMoneyBag(MoneyBag moneyBag) {
+		// TODO Auto-generated method stub
+		Vector<Money> MergedMoney = new Vector<Money>(); 
+		
+		MergedMoney.add(this);
+		
+		MergedMoney.addAll(moneyBag.getMoneyBagVal());
+		return new MoneyBag(MergedMoney);
+		
+	}
 
 	@Override
 	public boolean equals(Object obj) {

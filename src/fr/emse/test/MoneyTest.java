@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.junit.Before;
 
 public class MoneyTest {
-	private Money m12CHF;  
-	private Money m14CHF;
+	private IMoney m12CHF;  
+	private IMoney m14CHF;
 	
 	
 	@Before
@@ -18,9 +18,8 @@ public class MoneyTest {
 	
 	@Test
 	public void testSimpleAdd() {
-		
-		Money expected = new Money(26, "CHF");
-		Money result = m12CHF.add(m14CHF); // exécution de la méthode testée
+		IMoney expected = new Money(26, "CHF");
+		IMoney result = m12CHF.add(m14CHF); // exécution de la méthode testée
 		assertTrue(expected.equals(result)); // comparaison
 	}
 	
